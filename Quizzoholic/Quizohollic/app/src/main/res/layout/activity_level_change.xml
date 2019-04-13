@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Views.LevelChangeActivity">
+
+    <ImageView
+        android:id="@+id/power_fifty_fifty"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/btn_buy_powers"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/power_logo_fifty_fifty" />
+
+    <ImageView
+        android:id="@+id/power_audience_poll"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginLeft="24dp"
+        android:layout_marginStart="24dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/btn_buy_powers"
+        app:layout_constraintStart_toEndOf="@+id/power_fifty_fifty"
+        app:srcCompat="@drawable/power_logo_audience_poll" />
+
+    <ImageView
+        android:id="@+id/power_flip_question"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/btn_buy_powers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/power_logo_flip_question" />
+
+    <ImageView
+        android:id="@+id/power_double_answer"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginBottom="32dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:scaleType="fitCenter"
+        app:layout_constraintBottom_toTopOf="@+id/btn_buy_powers"
+        app:layout_constraintEnd_toStartOf="@+id/power_flip_question"
+        app:srcCompat="@drawable/power_logo_double_answer" />
+
+    <TextView
+        android:id="@+id/power_count_fifty_fifty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textColor="@color/Black"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/power_fifty_fifty"
+        app:layout_constraintStart_toStartOf="@+id/power_fifty_fifty"
+        app:layout_constraintTop_toBottomOf="@+id/power_fifty_fifty" />
+
+    <TextView
+        android:id="@+id/power_count_audience_poll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textColor="@color/Black"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/power_audience_poll"
+        app:layout_constraintStart_toStartOf="@+id/power_audience_poll"
+        app:layout_constraintTop_toBottomOf="@+id/power_audience_poll" />
+
+    <TextView
+        android:id="@+id/power_count_double_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textColor="@color/Black"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/power_double_answer"
+        app:layout_constraintStart_toStartOf="@+id/power_double_answer"
+        app:layout_constraintTop_toBottomOf="@+id/power_double_answer" />
+
+    <TextView
+        android:id="@+id/power_count_flip_question"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:text="0"
+        android:textColor="@color/Black"
+        android:textSize="8sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/power_flip_question"
+        app:layout_constraintStart_toStartOf="@+id/power_flip_question"
+        app:layout_constraintTop_toBottomOf="@+id/power_flip_question" />
+
+    <ImageView
+        android:id="@+id/small_logo"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:elevation="2dp"
+        android:onClick="BackToMenuClick"
+        android:scaleType="fitCenter"
+        android:src="@drawable/button_back"
+        android:translationZ="2dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btn_back_to_quiz"
+        style="@style/QuizzoholicLightTheme.MenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:onClick="BackToQuiz"
+        android:text="@string/text_back_to_game"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btn_buy_powers"
+        style="@style/QuizzoholicLightTheme.MenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="32dp"
+        android:onClick="CallBuyPowers"
+        android:text="@string/button_text_buy_powers"
+        app:layout_constraintBottom_toTopOf="@+id/btn_back_to_quiz"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/score_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="64dp"
+        android:text="Score"
+        android:textColor="@color/Black"
+        android:textSize="30sp"
+        app:fontFamily="@font/app_text_font"
+        app:layout_constraintBottom_toTopOf="@+id/power_audience_poll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</android.support.constraint.ConstraintLayout>

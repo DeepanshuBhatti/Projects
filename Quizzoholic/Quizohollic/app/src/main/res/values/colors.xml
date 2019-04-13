@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="White">#FFFFFF</color>
+    <color name="Glass">#EDFAFD</color>
+    <color name="Chill">#AED9DA</color>
+    <color name="CaliforniaCoral">#3ddad7</color>
+    <color name="BondiBlue">#2a93d5</color>
+    <color name="Marina">#135589</color>
+    <color name="Black">#000000</color>
+    <color name="Ink">#062f4f</color>
+    <color name="Posy">#813772</color>
+    <color name="Ember">#b82601</color>
+    <color name="Yellow">#ffff00</color>
+    <color name="Green">#008000</color>
+    <color name="Gold">#FFD700</color>
+    <color name="DarkGreen">#003400</color>
+</resources>

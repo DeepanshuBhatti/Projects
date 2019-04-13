@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">Quizzoholic</string>
+    <string name="brand_name">3 Ounce Cheese</string>
+    <string name="presents">Presents</string>
+    <string name="button_text_start_quiz">Start The Quiz</string>
+    <string name="exit">Exit</string>
+    <string name="game_over">Game Over!</string>
+    <string name="restart">Restart</string>
+    <string name="thought">Dilo Ka Shooter, Hai Mera Scooter!</string>
+    <string name="Close_Cross">X</string>
+    <string name="HowToPlayContent">The content for how to play shall show up here...</string>
+    <string name="FAQ_Content">Content for frequently asked questions shall sshow up here...</string>
+    <string name="LegalPrivacyStatement_Content">The content for legal privacy statement shall show up here...</string>
+    <string name="heading_options">Options</string>
+    <string name="text_option_sound">Sound</string>
+    <string name="text_option_vibrate">Vibrate</string>
+    <string name="button_text_buy_powers">Buy Powers</string>
+    <string name="button_text_how_to_play">How to Play?</string>
+    <string name="button_text_faq">FAQ</string>
+    <string name="button_text_legal_privacy_statement">Legal Privacy Statement</string>
+    <string name="button_text_rate_us">Rate Us</string>
+    <string name="heading_powers">Powers</string>
+    <string name="text_infinity_mode_info">This is infinity mode, you can not pause the game while playing!</string>
+    <string name="text_enter_user_name">Enter your name:</string>
+    <string name="heading_audience_poll">Audience Poll</string>
+    <string name="text_back_to_game">Back To Game</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

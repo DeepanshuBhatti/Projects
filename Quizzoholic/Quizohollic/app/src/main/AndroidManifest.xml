@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.threeouncecheese.quizzoholic">
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <application
+        android:allowBackup="true"
+        android:hardwareAccelerated="false"
+        android:icon="@mipmap/ember_icon"
+        android:label="@string/app_name"
+        android:largeHeap="true"
+        android:roundIcon="@mipmap/ember_icon"
+        android:supportsRtl="true"
+        android:theme="@style/QuizzoholicLightTheme">
+        <activity
+            android:name=".Views.MainActivity"
+            android:theme="@style/QuizzoholicLightTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Views.MenuActivity"
+            android:theme="@style/QuizzoholicLightTheme" />
+        <activity
+            android:name=".Views.RandomThoughtActivity"
+            android:theme="@style/QuizzoholicLightTheme" />
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
+
+        <activity
+            android:name=".Views.QuizActivity"
+            android:theme="@style/QuizzoholicLightTheme" />
+        <activity android:name=".Views.GameOverActivity" />
+        <activity android:name=".Views.UserNameActivity" />
+        <activity android:name=".Views.OptionsActivity" />
+        <activity android:name=".Views.BuyPowersActivity" />
+        <activity android:name=".Views.LevelChangeActivity" />
+        <activity android:name=".Views.ScoreboardActivity" />
+        <activity android:name=".Views.OptionsSubActivity" />
+        <activity android:name=".Views.DataOperationsActivity"></activity>
+    </application>
+
+</manifest>
