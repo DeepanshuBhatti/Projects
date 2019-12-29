@@ -4,7 +4,7 @@
 
 ## Introduction
 
-The wallpaper changer is a small python application which provides users to change desktop wallpaper automatically from the list of wallpaeres provided in windows 10.
+The wallpaper changer is a small python application which provides users to change desktop wallpaper automatically in windows 10 from the selected wallpaper directory.
 
 This is basically developed for non activated windows as the windows feature to change wallpaper automatically is disabled.
 
@@ -28,5 +28,6 @@ This is basically developed for non activated windows as the windows feature to 
 * To generate exe file for application
   * pyinstaller --onefile -w ChangeWallpaper.py
 * This will generate an exe file in dist folder
+* Put this exe file in Startup folder to run this application on start
 
 ---

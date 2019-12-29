@@ -9,6 +9,9 @@ from os.path import isfile, join
 from tkinter import *
 import tkinter.font as font
 
+SLEEP_TIME_SECONDS = 180
+WIDTH = 1366
+HEIGHT = 768
 SPI_SETDESKWALLPAPER = 20
 wallpaper_directory = r'E:\Wallpapers\Wallpapers'
 
@@ -27,7 +30,7 @@ def get_wallpaper(wallpapers_list):
 def change_wallpaper_in_time(list_of_wallpapers):
     while True:
         change_desktop_wallpaper(list_of_wallpapers)
-        time.sleep(180)
+        time.sleep(SLEEP_TIME_SECONDS)
 
 
 def change_desktop_wallpaper(list_of_wallpapers):
@@ -40,15 +43,15 @@ def resize_wallpaper(wallpaper):
     new_path = 'temp.jpg'
     image_obj = PIL.Image.open(wallpaper)
 
-    while image_obj.size[0] < 1366 or image_obj.size[1] < 768:
+    while image_obj.size[0] < WIDTH or image_obj.size[1] < HEIGHT:
         wallpaper = get_wallpaper(list_of_wallpapers)
         image_obj = PIL.Image.open(wallpaper)
 
-    if image_obj.size[0] == 1366 or image_obj.size[1] == 768:
+    if image_obj.size[0] == WIDTH or image_obj.size[1] == HEIGHT:
         return wallpaper
 
-    image_obj = image_obj.resize((1366, 768), PIL.Image.ANTIALIAS)
-    new_path = join(r'E:\Wallpapers\Wallpapers', new_path)
+    image_obj = image_obj.resize((WIDTH, HEIGHT), PIL.Image.ANTIALIAS)
+    new_path = join(wallpaper_directory, new_path)
     image_obj.save(new_path)
     return new_path
 
@@ -79,7 +82,7 @@ if __name__ == '__main__':
     start_auto_changer(list_of_wallpapers)
     main_window = Tk()
     main_window.title('Deepanshu Wallpaper Changer')
-    main_window.resizable(False, False)
+    main_window.resizable(False, False)̥̥
     canvas = Canvas(main_window)
     populate_main_window(canvas)
     canvas.pack()
