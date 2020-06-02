@@ -1,0 +1,14 @@
+{
+  "size": {
+    "height": 1080,
+    "width": 1920,
+    "min_height": 768,
+    "min_width": 1366
+  },
+  "path": {
+    "wallpaper_directory": "E:\\Wallpapers\\Wallpapers"
+  },
+  "auto_change": {
+    "time": 180
+  }
+}
