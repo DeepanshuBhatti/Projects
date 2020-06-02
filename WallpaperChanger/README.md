@@ -35,6 +35,7 @@ This is basically developed for non activated windows as the windows feature to 
 ## Run on Startup
 
 * Paste the generated WallpaperChanger.exe at "C:\Users\<UserName>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
+* Or Paste ExecuteChanger.cmd in "C:\Users\<UserName>\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup"
 * Restart your computer
 
 ---

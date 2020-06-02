@@ -1,0 +1,1 @@
+python D:\\Git\\repo\\Projects\\WallpaperChanger\\ChangeWallpaper.py

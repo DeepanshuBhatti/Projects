@@ -10,6 +10,7 @@ from PIL import Image
 from os import listdir
 from os.path import isfile, join
 from PyQt5.QtWidgets import QApplication, QPushButton, QMainWindow
+import pathlib
 
 logging.basicConfig(
     format='[%(asctime)s] %(process)d [%(pathname)s:%(lineno)d | %(levelname)s] - %(''message)s',
@@ -19,15 +20,17 @@ logging.basicConfig(
 
 class WallpaperChangerApp(QMainWindow):
     SPI_SETDESKWALLPAPER = 20
-    config_path = './config.json'
+    config_path = 'config.json'
     wallpapers_list = []
     backup_list = []
 
     def __init__(self):
         try:
             super().__init__()
+
+            self.config_path = join(pathlib.Path(__file__).parent.absolute(), self.config_path)
             if not os.path.isfile(self.config_path):
-                raise Exception("Config File Not found")
+                raise Exception("Config File Not found: " + self.config_path)
 
             with open(self.config_path) as json_data_file:
                 data = json.load(json_data_file)
