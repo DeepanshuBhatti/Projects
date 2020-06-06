@@ -1,5 +1,8 @@
 package com.deepanshu.model;
 
+/*
+ * @author Deepanshu Bhatti
+ */
 public class PathData {
 
     private final long id;

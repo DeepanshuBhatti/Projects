@@ -2,6 +2,11 @@
 
 @Author: Deepanshu Bhatti
 
+## Introduction
+
+Path finder is a SpringBoot restful application which provides APIs to get the shortest distance and the shortest
+ path from source to destination.
+
 ## Build and Deploy
 
 ### Intellij
@@ -29,14 +34,32 @@ java -jar build/libs/PathFinder-1.0-SNAPSHOT.jar
 ## Access URL
 
 ```sh
-http://localhost:8080/getShortestPath?name=Deepanshu
+http://localhost:8080/getAllCityInfo?format=json
 ```
 Result will be
 ```json
-{
-  "id": 3,
-  "content": "Hello, Deepanshu!"
-}
+[
+    {
+        "id": 1,
+        "name": "Delhi",
+        "abbrev": null
+    },
+    {
+        "id": 2,
+        "name": "Mumbai",
+        "abbrev": null
+    },
+    {
+        "id": 3,
+        "name": "Agra",
+        "abbrev": null
+    },
+    {
+        "id": 4,
+        "name": "Jaipur",
+        "abbrev": null
+    }
+]
 ```
 
 ---
