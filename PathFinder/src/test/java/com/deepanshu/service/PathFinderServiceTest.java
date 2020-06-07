@@ -1,6 +1,5 @@
 package com.deepanshu.service;
 
-import com.deepanshu.model.PathData;
 import com.deepanshu.model.ReferenceData;
 import org.junit.Assert;
 import org.junit.Test;
