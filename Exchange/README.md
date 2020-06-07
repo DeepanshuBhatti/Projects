@@ -32,10 +32,26 @@ java -jar build/libs/Exchange-1.0-SNAPSHOT.jar
 
 ```sh
 http://localhost:8080/getExchangeRate/KUCOIN?fromCurrency=BTC&toCurrency=ETH&format=json
-```
-Result will be
-```json
+
+# Result will be
 39.99280129576676
+```
+```sh
+http://localhost:8080/getCurrencyInfo/KUCOIN?currency=BTC&format=json
+
+# Result will be
+{
+    "name": "Bitcoin",
+    "symbol": "BTC",
+    "priceUsd": 9664.549999741323,
+    "priceBtc": 1,
+    "percentChange24hUsd": 0.33637349915136877,
+    "lastUpdated": "2020-06-07T06:13:18.000+0000"
+}
+```
+```sh
+http://localhost:8080/getExchangeList
+
 ```
 
 ---
