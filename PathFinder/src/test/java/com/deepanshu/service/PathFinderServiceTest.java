@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /*
@@ -26,6 +27,16 @@ public class PathFinderServiceTest {
         Assert.assertNotNull(referenceDataList);
         Assert.assertEquals(4, referenceDataList.size());
 
+    }
+
+    @Test
+    public void testGetShortestDistance() {
+        BigDecimal distance  = pathFinderService.getShortestDistance("delhi", "mumbai");
+        Assert.assertEquals(BigDecimal.valueOf(1428), distance);
+        distance  = pathFinderService.getShortestDistance("mumbai", "delhi");
+        Assert.assertEquals(BigDecimal.valueOf(1428), distance);
+        distance  = pathFinderService.getShortestDistance("jaipur", "delhi");
+        Assert.assertEquals(BigDecimal.valueOf(281), distance);
     }
 
 }

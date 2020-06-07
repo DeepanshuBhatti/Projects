@@ -34,10 +34,9 @@ java -jar build/libs/PathFinder-1.0-SNAPSHOT.jar
 ## Access URL
 
 ```sh
-http://localhost:8080/getAllCityInfo?format=json
-```
-Result will be
-```json
+http://localhost:8080/PathFinderService/getAllCityInfo?format=json
+
+# Result
 [
     {
         "id": 1,
@@ -62,4 +61,10 @@ Result will be
 ]
 ```
 
+```sh
+http://localhost:8080/PathFinderService/getShortestDistance?sourceName=delhi&destinationName=mumbai&format=json
+
+# Result
+1428
+```
 ---
