@@ -45,7 +45,6 @@ public class PathFinderService {
             @RequestParam(value = "destinationName") String destinationName
     ) {
         Map<Integer, String> cityIdToNameMap = pathFinderDao.getCityIdToNameMap();
-        int cityVertices = cityIdToNameMap.size();
         int sourceId = -1;
         int destinationId = -1;
 

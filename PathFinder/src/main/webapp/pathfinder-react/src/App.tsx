@@ -1,11 +1,11 @@
 import React from "react";
 import "./App.css";
-import CitySearch from "./component/citySearch";
+import CitySearch from "./component/CitySearch";
 
 function App() {
   return (
     <div className="App">
-      <CitySearch cityId={1} cityName="Mumbai" />
+      <CitySearch id={1} name="Delhi" />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 export interface CityInfo {
-  cityId: number;
-  cityName: string;
+  id: number;
+  name: string;
+  abbrev?: string;
 }
