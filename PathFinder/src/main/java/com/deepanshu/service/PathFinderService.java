@@ -79,7 +79,7 @@ public class PathFinderService {
         }
 
         // Calculate the single source shortest path
-        Dijkstra dpq = new Dijkstra(cityVertices);
+        Dijkstra dpq = new Dijkstra();
         dpq.calculateFromSource(distanceNodes, sourceId);
 
         return dpq.getDestinationIdToDistanceMap().get(destinationId);

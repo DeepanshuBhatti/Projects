@@ -24,18 +24,18 @@ public class PathFinderServiceTest {
         List<ReferenceData> referenceDataList = pathFinderService.getAllCityInfo();
 
         Assert.assertNotNull(referenceDataList);
-        Assert.assertEquals(4, referenceDataList.size());
+        Assert.assertEquals(6, referenceDataList.size());
 
     }
 
     @Test
     public void testGetShortestDistance() {
         BigDecimal distance  = pathFinderService.getShortestDistance("delhi", "mumbai");
-        Assert.assertEquals(BigDecimal.valueOf(1428), distance);
-        distance  = pathFinderService.getShortestDistance("mumbai", "delhi");
-        Assert.assertEquals(BigDecimal.valueOf(1428), distance);
-        distance  = pathFinderService.getShortestDistance("jaipur", "delhi");
-        Assert.assertEquals(BigDecimal.valueOf(281), distance);
+        Assert.assertEquals(BigDecimal.valueOf(1461), distance);
+        distance  = pathFinderService.getShortestDistance("indore", "delhi");
+        Assert.assertEquals(BigDecimal.valueOf(1011), distance);
+        distance  = pathFinderService.getShortestDistance("jaipur", "mumbai");
+        Assert.assertEquals(BigDecimal.valueOf(1180), distance);
     }
 
 }

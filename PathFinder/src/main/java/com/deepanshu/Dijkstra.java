@@ -12,23 +12,21 @@ public class Dijkstra {
     private final Map<Integer, BigDecimal> vertexIdToDistanceMap;
     private final Set<Integer> settledVertices;
     private final PriorityQueue<Node> nodePriorityQueue;
-    private final int numberOfVertices;
     private Map<Integer, List<Node>> vertexIdToNodeListMap;
     private final Map<Integer, BigDecimal> destinationIdToDistanceMap;
 
-    public Dijkstra(int numberOfVertices) {
+    public Dijkstra() {
         this.destinationIdToDistanceMap = new HashMap<>();
-        this.numberOfVertices = numberOfVertices;
         vertexIdToDistanceMap = new HashMap<>();
         settledVertices = new HashSet<>();
-        nodePriorityQueue = new PriorityQueue<>(numberOfVertices, new Node());
+        nodePriorityQueue = new PriorityQueue<>(1, new Node());
     }
 
     public void calculateFromSource(Map<Integer, List<Node>> adj, int src) {
         this.vertexIdToNodeListMap = adj;
         nodePriorityQueue.add(new Node(src, BigDecimal.ZERO));
         vertexIdToDistanceMap.putIfAbsent(src, BigDecimal.ZERO);
-        while (settledVertices.size() != numberOfVertices) {
+        while (settledVertices.size() != vertexIdToNodeListMap.size()) {
             int vertexId = nodePriorityQueue.remove().getVertexId();
             settledVertices.add(vertexId);
             processNeighbours(vertexId);
