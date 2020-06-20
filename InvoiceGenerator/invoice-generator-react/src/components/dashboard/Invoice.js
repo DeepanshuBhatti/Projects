@@ -51,6 +51,7 @@ class Invoice extends Component {
     let vatElement;
     let amount = 0;
     let subTotal = 0;
+    let gstTotal = 0;
     let discount = 0;
     let vat = 0;
     let amountPaidElement;
@@ -85,13 +86,14 @@ class Invoice extends Component {
     }
 
     for (let key in items) {
-      if (items.hasOwnProperty(key)) {
-        if (
-          items[key] &&
-          parseFloat(items[key]["quantity"]) > 0 &&
-          parseFloat(items[key]["price"]) > 0
-        ) {
-          subTotal = subTotal + items[key]["quantity"] * items[key]["price"];
+      if (items.hasOwnProperty(key) && items[key]) {
+        let quantity = parseFloat(items[key]["quantity"]);
+        let price = parseFloat(items[key]["price"]);
+        let gst = parseFloat(items[key]["gst"]);
+
+        if (quantity > 0 && price > 0 && gst > 0) {
+          subTotal = subTotal + quantity * price;
+          gstTotal = gstTotal + (quantity * price * gst) / 100;
           let tax = 0;
           if (addInfo["discount"] && addInfo["discount"] >= 0) {
             discount = addInfo["discount"] / 100;
@@ -112,10 +114,15 @@ class Invoice extends Component {
               subTotal * discount +
               subTotal * tax +
               subTotal * vat -
-              parseFloat(addInfo["amountPaid"]);
+              parseFloat(addInfo["amountPaid"]) +
+              gstTotal;
           } else {
             amount =
-              subTotal - subTotal * discount + subTotal * tax + subTotal * vat;
+              subTotal -
+              subTotal * discount +
+              subTotal * tax +
+              subTotal * vat +
+              gstTotal;
           }
         }
       }
@@ -270,6 +277,12 @@ class Invoice extends Component {
                 <span>Subtotal</span>
                 <h2>
                   {this.props.currency["value"]} {subTotal.toFixed(2)}
+                </h2>
+              </div>
+              <div>
+                <span>GST</span>
+                <h2>
+                  {this.props.currency["value"]} {gstTotal.toFixed(2)}
                 </h2>
               </div>
               {discountElement}

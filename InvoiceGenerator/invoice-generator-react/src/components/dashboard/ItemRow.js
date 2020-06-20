@@ -4,6 +4,10 @@ import { setItem } from "../../actions";
 import { connect } from "react-redux";
 import { ItemRowProps } from "./../../models/Props";
 import { ItemRowState } from "./../../models/States";
+import {
+  ITEM_ROW_RESPONSIVE_STYLE,
+  ITEM_ROW_STYLE,
+} from "./../../constants/Styles";
 
 class ItemRow extends Component {
   state: ItemRowState;
@@ -16,6 +20,7 @@ class ItemRow extends Component {
         description: "",
         price: undefined,
         quantity: undefined,
+        gst: 5.0,
       },
     };
   }
@@ -43,53 +48,58 @@ class ItemRow extends Component {
     }
   };
 
+  getZeroDiv() {
+    return <div style={this.getInputStyle()}>0</div>;
+  }
+
+  getInputStyle() {
+    return this.props.width >= 700
+      ? ITEM_ROW_STYLE.inputStyle
+      : ITEM_ROW_RESPONSIVE_STYLE.inputStyle;
+  }
+
+  getItemRowStyle() {
+    return this.props.width >= 700
+      ? ITEM_ROW_STYLE.itemRow
+      : ITEM_ROW_RESPONSIVE_STYLE.itemRow;
+  }
+
   render() {
     const { obj: data } = this.state;
-    let price;
+    let subAmount = this.getZeroDiv();
+    let gstAmount = this.getZeroDiv();
+    let totalAmount = this.getZeroDiv();
 
     if (
-      parseFloat(data.quantity) * parseFloat(data.price) > 0 &&
       data.quantity &&
-      data.price
+      data.price &&
+      data.gst &&
+      parseFloat(data.quantity) *
+        parseFloat(data.price) *
+        (1 + data.gst / 100) >
+        0
     ) {
-      price = (
-        <div
-          style={
-            this.props.width >= 700
-              ? style.inputStyle
-              : responsiveStyle.inputStyle
-          }
-        >
-          {(data.quantity * data.price).toFixed(2)}
-        </div>
+      let subAmountValue = data.quantity * data.price;
+      let gstAmountValue = (data.quantity * data.price * data.gst) / 100;
+      let totalAmountValue = subAmountValue + gstAmountValue;
+
+      subAmount = (
+        <div style={this.getInputStyle()}>{subAmountValue.toFixed(2)}</div>
       );
-    } else {
-      price = (
-        <div
-          style={
-            this.props.width >= 700
-              ? style.inputStyle
-              : responsiveStyle.inputStyle
-          }
-        >
-          0
-        </div>
+
+      gstAmount = (
+        <div style={this.getInputStyle()}>{gstAmountValue.toFixed(2)}</div>
+      );
+
+      totalAmount = (
+        <div style={this.getInputStyle()}>{totalAmountValue.toFixed(2)}</div>
       );
     }
 
     return (
-      <div
-        style={
-          this.props.width >= 700 ? style.itemRow : responsiveStyle.itemRow
-        }
-        className="item-row"
-      >
+      <div style={this.getItemRowStyle()} className="item-row">
         <input
-          style={
-            this.props.width >= 700
-              ? style.inputStyle
-              : responsiveStyle.inputStyle
-          }
+          style={this.getInputStyle()}
           name="name"
           type="text"
           value={data.name}
@@ -97,11 +107,7 @@ class ItemRow extends Component {
           placeholder="Item Name"
         />
         <input
-          style={
-            this.props.width >= 700
-              ? style.inputStyle
-              : responsiveStyle.inputStyle
-          }
+          style={this.getInputStyle()}
           name="description"
           type="text"
           value={data.description}
@@ -109,11 +115,7 @@ class ItemRow extends Component {
           placeholder="Description"
         />
         <input
-          style={
-            this.props.width >= 700
-              ? style.inputStyle
-              : responsiveStyle.inputStyle
-          }
+          style={this.getInputStyle()}
           name="quantity"
           type="text"
           value={data.quantity}
@@ -121,75 +123,28 @@ class ItemRow extends Component {
           placeholder="Quantity"
         />
         <input
-          style={
-            this.props.width >= 700
-              ? style.inputStyle
-              : responsiveStyle.inputStyle
-          }
+          style={this.getInputStyle()}
           name="price"
           type="text"
           value={data.price}
           onChange={this.handleChange}
           placeholder="Price"
         />
-        {price}
+        {subAmount}
+        <input
+          style={this.getInputStyle()}
+          name="gst"
+          type="text"
+          value={data.gst}
+          onChange={this.handleChange}
+          placeholder="GST"
+        />
+        {gstAmount}
+        {totalAmount}
       </div>
     );
   }
 }
-
-const style = {
-  itemRow: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    width: "100%",
-  },
-  inputStyle: {
-    border: "0px",
-    maxWidth: "160px",
-    width: "100%",
-    padding: "2px",
-    backgroundColor: "#FBFCFC",
-  },
-  saveButtonStyle: {
-    borderRadius: "3px",
-    color: "#fff",
-    margin: "4px 15px",
-    backgroundColor: "#01D58A",
-    padding: "3px 12px",
-  },
-  saveButtonHoverStyle: {
-    borderRadius: "3px",
-    color: "#fff",
-    margin: "4px 15px",
-    backgroundColor: "rgba(3, 199, 130, 1)",
-    padding: "3px 12px",
-  },
-  deleteButtonStyle: {
-    fontSize: "18px",
-    color: "#999",
-    margin: "4px 15px 4px 0",
-  },
-};
-
-const responsiveStyle = {
-  itemRow: {
-    display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    width: "100%",
-    flexWrap: "Wrap",
-  },
-  inputStyle: {
-    border: "0px",
-    maxWidth: "260px",
-    width: "100%",
-    padding: "5px",
-    margin: "2px",
-    backgroundColor: "#FBFCFC",
-  },
-};
 
 function mapStateToProps(state, ownProps) {
   return {

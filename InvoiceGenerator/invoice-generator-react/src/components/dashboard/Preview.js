@@ -238,9 +238,12 @@ class Preview extends Component {
                 <div className="invoice__item-list__head">
                   <div>Item</div>
                   <div>Description</div>
-                  <div>Qty</div>
+                  <div>Quantity</div>
                   <div>Price</div>
                   <div>SubAmount</div>
+                  <div>GST %</div>
+                  <div>GstAmount</div>
+                  <div>TotalAmount</div>
                 </div>
                 {itemElement}
               </div>

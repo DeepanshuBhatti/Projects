@@ -9,23 +9,28 @@ import {
 import ItemRow from "./ItemRow";
 import { addItem, setItemsOrder, removeItem, setWidth } from "../../actions";
 import { connect } from "react-redux";
+import { ITEM_STYLE } from "./../../constants/Styles";
 
 const DragHandle = SortableHandle(() => (
   <span>
-    <i className="fa fa-bars" aria-hidden="true" style={style.barStyle}></i>
+    <i
+      className="fa fa-bars"
+      aria-hidden="true"
+      style={ITEM_STYLE.barStyle}
+    ></i>
   </span>
 ));
 
 const SortableItem = SortableElement(({ value, onRemove }: Object) => {
   return (
-    <div style={style.listWrapper}>
-      <li style={style.listStyle}>
+    <div style={ITEM_STYLE.listWrapper}>
+      <li style={ITEM_STYLE.listStyle}>
         <ItemRow itemId={value} />
         <DragHandle />
       </li>
       <a onClick={() => onRemove(value)}>
         <i
-          style={style.deleteButtonStyle}
+          style={ITEM_STYLE.deleteButtonStyle}
           className="fa fa-times"
           aria-hidden="true"
         ></i>
@@ -48,36 +53,6 @@ const SortableList = SortableContainer(({ order, items, onRemove }: Object) => {
     </ul>
   );
 });
-
-const style = {
-  listWrapper: {
-    display: "flex",
-    flexDirection: "row",
-    marginTop: "10px",
-  },
-  listStyle: {
-    display: "flex",
-    flexDirection: "row",
-    width: "calc(100% - 20px)",
-    left: "0",
-    alignItems: "center",
-    backgroundColor: "#FBFCFC",
-    borderRadius: "3px",
-    height: "auto",
-    padding: "2px 8px",
-  },
-  barStyle: {
-    fontSize: "18px",
-    color: "#999",
-    verticalAlign: "middle",
-    transition: "all .3s",
-  },
-  deleteButtonStyle: {
-    fontSize: "17px",
-    color: "#999",
-    margin: "14px 4px",
-  },
-};
 
 class Item extends Component {
   onSortEnd = ({ oldIndex, newIndex }: Object) => {
@@ -109,6 +84,9 @@ class Item extends Component {
           <div>Quantity</div>
           <div>Price</div>
           <div>SubAmount</div>
+          <div>GST %</div>
+          <div>GSTAmount</div>
+          <div>TotalAmount</div>
         </div>
         <SortableList
           order={order}
