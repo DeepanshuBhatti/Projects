@@ -4,7 +4,6 @@ import Toggle from "react-toggle";
 import Select from "react-select";
 import { connect } from "react-redux";
 import { Link } from "react-router-dom";
-
 import {
   setAddInfo,
   setPaidStatus,
@@ -13,34 +12,13 @@ import {
   setDownloadStatus,
 } from "../../actions";
 
-const currencyData = require("./data.json");
+import { SideNavProps } from "./../../models/Props";
+import { DATE_OPTIONS } from "./../../constants";
 
-type Props = {
-  setAddInfo: Function,
-  setPaidStatus: Function,
-  setCurrency: Function,
-  setDateFormat: Function,
-  setDownloadStatus: Function,
-  currency: Object,
-  addInfo: {
-    discount: ?number,
-    tax: ?number,
-    amountPaid: ?number,
-    vat: ?number,
-  },
-  paidStatus: ?boolean,
-  downloadStatus: ?boolean,
-  dateFormat: ?string,
-};
-
-const dateOptions = [
-  { value: "MM/DD/YYYY", label: "MM/DD/YYYY" },
-  { value: "DD/MM/YYYY", label: "DD/MM/YYYY" },
-  { value: "YYYY/MM/DD", label: "YYYY/MM/DD" },
-];
+const currencyData = require("./../../resources/data.json");
 
 class SideNav extends Component {
-  constructor(props: Props) {
+  constructor(props: SideNavProps) {
     super(props);
   }
 
@@ -62,11 +40,11 @@ class SideNav extends Component {
     }
   };
 
-  currencyChange = (val: { value: ?string, label: ?string }) => {
+  currencyChange = (val: { value?: string, label?: string }) => {
     if (val) {
       this.props.setCurrency(val);
     } else {
-      this.props.setCurrency({ value: "$", label: "USD" });
+      this.props.setCurrency({ value: "₹", label: "INR" });
     }
   };
 
@@ -163,7 +141,7 @@ class SideNav extends Component {
                 name="dateFormat"
                 searchable={false}
                 value={this.props.dateFormat}
-                options={dateOptions}
+                options={DATE_OPTIONS}
                 onChange={this.dateFormatChange}
               />
             </div>

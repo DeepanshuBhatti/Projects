@@ -10,55 +10,14 @@ import {
   setIssueDate,
   setDueDate,
 } from "../../actions";
-
-type Props = {
-  currency: Object,
-  items: Object,
-  addInfo: {
-    discount: ?number,
-    tax: ?number,
-    amountPaid: ?number,
-    vat: ?number,
-  },
-  invoiceDetails: {
-    to: string,
-    from: string,
-    addressTo: string,
-    addressFrom: string,
-    phoneTo: string,
-    phoneFrom: string,
-    emailTo: string,
-    emailFrom: string,
-    invoiceNumber: string,
-    job: string,
-    invoiceType: string,
-  },
-  status: { value: ?string, label: ?string },
-  paidStatus: ?boolean,
-  issueDate: ?Date,
-  dueDate: ?Date,
-  setInvoiceDetails: Function,
-  setStatus: Function,
-  setIssueDate: Function,
-  setDueDate: Function,
-};
-
-type State = {
-  issueFocused: boolean,
-  dueFocused: boolean,
-};
-
-const options = [
-  { value: "paid", label: "Paid" },
-  { value: "due", label: "Due" },
-  { value: "overdue", label: "Overdue" },
-  { value: "onhold", label: "On Hold" },
-];
+import { InvoiceProps } from "./../../models/Props";
+import { InvoiceState } from "./../../models/States";
+import { INVOICE_OPTIONS } from "./../../constants";
 
 class Invoice extends Component {
-  state: State;
+  state: InvoiceState;
 
-  constructor(props: Props) {
+  constructor(props: InvoiceProps) {
     super(props);
     this.state = {
       invoiceNumber: "001",
@@ -169,7 +128,7 @@ class Invoice extends Component {
             <Select
               name="status"
               value={this.props.status}
-              options={options}
+              options={INVOICE_OPTIONS}
               searchable={false}
               onChange={this.selectChange}
             />

@@ -21,3 +21,16 @@ export const SET_DUE_DATE: string = "SET_DUE_DATE";
 export const SET_STATUS: string = "SET_STATUS";
 export const SET_INVOICE_DETAILS: string = "SET_INVOICE_DETAILS";
 export const SET_DOWNLOAD_STATUS: string = "SET_DOWNLOAD_STATUS";
+
+export const INVOICE_OPTIONS = [
+  { value: "paid", label: "Paid" },
+  { value: "due", label: "Due" },
+  { value: "overdue", label: "Overdue" },
+  { value: "onhold", label: "On Hold" },
+];
+
+export const DATE_OPTIONS = [
+  { value: "MM/DD/YYYY", label: "MM/DD/YYYY" },
+  { value: "DD/MM/YYYY", label: "DD/MM/YYYY" },
+  { value: "YYYY/MM/DD", label: "YYYY/MM/DD" },
+];
