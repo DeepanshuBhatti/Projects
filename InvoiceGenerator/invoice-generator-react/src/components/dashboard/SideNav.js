@@ -15,7 +15,7 @@ import {
 import { SideNavProps } from "./../../models/Props";
 import { DATE_OPTIONS } from "./../../constants";
 
-const currencyData = require("./../../resources/data.json");
+const currencyData = require("./../../resources/currencyData.json");
 
 class SideNav extends Component {
   constructor(props: SideNavProps) {

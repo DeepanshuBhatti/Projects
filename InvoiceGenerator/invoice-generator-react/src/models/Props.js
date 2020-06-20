@@ -35,6 +35,8 @@ export type ItemRowProps = {
   itemId: number,
   setItem: Function,
   width: number,
+  gst: Object,
+  setGst: Function,
 };
 
 export type SideNavProps = {

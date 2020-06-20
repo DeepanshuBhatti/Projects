@@ -61,6 +61,13 @@ export const ITEM_ROW_STYLE = {
     color: "#999",
     margin: "4px 15px 4px 0",
   },
+  gstDropDownStyle: {
+    width: "50%",
+    padding: "2px",
+    border: "0px",
+    minWidth: "60px",
+    maxWidth: "160px",
+  },
 };
 
 export const ITEM_ROW_RESPONSIVE_STYLE = {
@@ -78,5 +85,35 @@ export const ITEM_ROW_RESPONSIVE_STYLE = {
     padding: "5px",
     margin: "2px",
     backgroundColor: "#FBFCFC",
+  },
+  gstDropDownStyle: {
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+    width: "50%",
+    minWidth: "60px",
+    maxWidth: "160px",
+    flexWrap: "Wrap",
+  },
+};
+
+export const NAV_BAR_STYLE = {
+  svg: {
+    fill: "#555",
+    color: "#fff",
+    top: "0",
+    border: "0",
+    right: "0",
+  },
+  octoArm: {
+    transformOrigin: "130px 106px",
+  },
+  githubCorner: {
+    position: "fixed",
+    right: "0",
+    top: "0",
+  },
+  logo: {
+    color: "#555",
   },
 };
