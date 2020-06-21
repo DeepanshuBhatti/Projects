@@ -28,15 +28,13 @@ class SideNav extends Component {
         e.target.name === "discount"
           ? e.target.value
           : this.props.addInfo.discount;
-      let tax =
-        e.target.name === "tax" ? e.target.value : this.props.addInfo.tax;
       let vat =
         e.target.name === "vat" ? e.target.value : this.props.addInfo.vat;
       let amountPaid =
         e.target.name === "amountPaid"
           ? e.target.value
           : this.props.addInfo.amountPaid;
-      this.props.setAddInfo(discount, tax, amountPaid, vat);
+      this.props.setAddInfo(discount, amountPaid, vat);
     }
   };
 
@@ -52,7 +50,7 @@ class SideNav extends Component {
     if (val) {
       this.props.setDateFormat(val);
     } else {
-      this.props.setDateFormat({ value: "MM/DD/YYYY", label: "MM/DD/YYYY" });
+      this.props.setDateFormat({ value: "DD/MM/YYYY", label: "DD/MM/YYYY" });
     }
   };
 
@@ -86,16 +84,6 @@ class SideNav extends Component {
               onChange={this.handleChange}
             />
           </div>
-          <div className="setting">
-            <span>Tax</span>
-            <input
-              type="text"
-              name="tax"
-              value={this.props.addInfo.tax}
-              onChange={this.handleChange}
-            />
-          </div>
-
           <div className="setting">
             <span>Value added tax (VAT)</span>
             <input
