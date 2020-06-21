@@ -45,31 +45,110 @@ class Invoice extends Component {
     }
   };
 
+  getFromAddressElement(invoiceDetails) {
+    return (
+      <div className="address-element">
+        <label htmlFor="from">Bill from:</label>
+        <input
+          type="text"
+          className="input-element"
+          name="from"
+          value={invoiceDetails.from}
+          onChange={this.handleChange}
+          placeholder="From"
+        />
+        <textarea
+          name="addressFrom"
+          value={invoiceDetails.addressFrom}
+          onChange={this.handleChange}
+          placeholder="Address"
+        />
+        <input
+          type="text"
+          className="input-element"
+          name="phoneFrom"
+          value={invoiceDetails.phoneFrom}
+          onChange={this.handleChange}
+          placeholder="Phone"
+        />
+        <input
+          type="email"
+          className="input-element"
+          name="emailFrom"
+          value={invoiceDetails.emailFrom}
+          onChange={this.handleChange}
+          placeholder="Email"
+        />
+      </div>
+    );
+  }
+
+  getToAddressElement(invoiceDetails) {
+    return (
+      <div className="address-element">
+        <label htmlFor="to">Bill to:</label>
+        <input
+          type="text"
+          className="input-element"
+          name="to"
+          value={invoiceDetails.to}
+          onChange={this.handleChange}
+          placeholder="To"
+        />
+        <textarea
+          name="addressTo"
+          value={invoiceDetails.addressTo}
+          onChange={this.handleChange}
+          placeholder="Address"
+        />
+        <input
+          type="text"
+          className="input-element"
+          name="phoneTo"
+          value={invoiceDetails.phoneTo}
+          onChange={this.handleChange}
+          placeholder="Phone"
+        />
+        <input
+          type="email"
+          className="input-element"
+          name="emailTo"
+          value={invoiceDetails.emailTo}
+          onChange={this.handleChange}
+          placeholder="Email"
+        />
+      </div>
+    );
+  }
+
   render() {
     const { items, addInfo, invoiceDetails, paidStatus } = this.props;
     let discountElement;
     let vatElement;
-    let amount = 0;
+    let amountTotal = 0;
     let subTotal = 0;
     let gstTotal = 0;
-    let discount = 0;
-    let vat = 0;
     let amountPaidElement;
 
-    if (addInfo["discount"] && addInfo["discount"] > 0) {
+    let currencySymbol = this.props.currency["value"];
+
+    let discountPercent = addInfo["discount"] || 0;
+    let vatPercent = addInfo["vat"] || 0;
+
+    if (discountPercent > 0) {
       discountElement = (
         <div>
           <span>Discount</span>
-          <h2>{addInfo["discount"]} %</h2>
+          <h2>{discountPercent} %</h2>
         </div>
       );
     }
 
-    if (addInfo["vat"] && addInfo["vat"] > 0) {
+    if (vatPercent > 0) {
       vatElement = (
         <div>
           <span>VAT</span>
-          <h2>{this.props.addInfo["vat"]} %</h2>
+          <h2>{vatPercent} %</h2>
         </div>
       );
     }
@@ -79,7 +158,7 @@ class Invoice extends Component {
         <div>
           <span>Paid to Date</span>
           <h2>
-            {this.props.currency["value"]} {addInfo["amountPaid"]}
+            {currencySymbol} {addInfo["amountPaid"]}
           </h2>
         </div>
       );
@@ -87,46 +166,22 @@ class Invoice extends Component {
 
     for (let key in items) {
       if (items.hasOwnProperty(key) && items[key]) {
-        let quantity = parseFloat(items[key]["quantity"]);
-        let price = parseFloat(items[key]["price"]);
-        let gst = parseFloat(items[key]["gst"]);
+        let quantity = parseFloat(items[key]["quantity"] || 0);
+        let price = parseFloat(items[key]["price"]) || 0;
+        let gst = parseFloat(items[key]["gst"] || 0);
 
         if (quantity > 0 && price > 0 && gst > 0) {
           subTotal = subTotal + quantity * price;
           gstTotal = gstTotal + (quantity * price * gst) / 100;
-          let tax = 0;
-          if (addInfo["discount"] && addInfo["discount"] >= 0) {
-            discount = addInfo["discount"] / 100;
-          }
-          if (addInfo["tax"] && addInfo["tax"] >= 0) {
-            tax = addInfo["tax"] / 100;
-          }
-          if (addInfo["vat"] && addInfo["vat"] >= 0) {
-            vat = addInfo["vat"] / 100;
-          }
-          if (
-            addInfo["amountPaid"] &&
-            addInfo["amountPaid"] > 0 &&
-            paidStatus
-          ) {
-            amount =
-              subTotal -
-              subTotal * discount +
-              subTotal * tax +
-              subTotal * vat -
-              parseFloat(addInfo["amountPaid"]) +
-              gstTotal;
-          } else {
-            amount =
-              subTotal -
-              subTotal * discount +
-              subTotal * tax +
-              subTotal * vat +
-              gstTotal;
-          }
         }
       }
     }
+
+    amountTotal =
+      subTotal +
+      gstTotal -
+      (subTotal * discountPercent) / 100 +
+      (subTotal * vatPercent) / 100;
 
     return (
       <div className="wrapper">
@@ -201,72 +256,8 @@ class Invoice extends Component {
           </div>
 
           <div className="invoice__info">
-            <div className="address-element">
-              <label htmlFor="from">Bill from:</label>
-              <input
-                type="text"
-                className="input-element"
-                name="from"
-                value={invoiceDetails.from}
-                onChange={this.handleChange}
-                placeholder="From"
-              />
-              <textarea
-                name="addressFrom"
-                value={invoiceDetails.addressFrom}
-                onChange={this.handleChange}
-                placeholder="Address"
-              />
-              <input
-                type="text"
-                className="input-element"
-                name="phoneFrom"
-                value={invoiceDetails.phoneFrom}
-                onChange={this.handleChange}
-                placeholder="Phone"
-              />
-              <input
-                type="email"
-                className="input-element"
-                name="emailFrom"
-                value={invoiceDetails.emailFrom}
-                onChange={this.handleChange}
-                placeholder="Email"
-              />
-            </div>
-            <div className="address-element">
-              <label htmlFor="to">Bill to:</label>
-              <input
-                type="text"
-                className="input-element"
-                name="to"
-                value={invoiceDetails.to}
-                onChange={this.handleChange}
-                placeholder="To"
-              />
-              <textarea
-                name="addressTo"
-                value={invoiceDetails.addressTo}
-                onChange={this.handleChange}
-                placeholder="Address"
-              />
-              <input
-                type="text"
-                className="input-element"
-                name="phoneTo"
-                value={invoiceDetails.phoneTo}
-                onChange={this.handleChange}
-                placeholder="Phone"
-              />
-              <input
-                type="email"
-                className="input-element"
-                name="emailTo"
-                value={invoiceDetails.emailTo}
-                onChange={this.handleChange}
-                placeholder="Email"
-              />
-            </div>
+            {this.getFromAddressElement(invoiceDetails)}
+            {this.getToAddressElement(invoiceDetails)}
           </div>
           <hr />
           <Item />
@@ -276,31 +267,22 @@ class Invoice extends Component {
               <div>
                 <span>Subtotal</span>
                 <h2>
-                  {this.props.currency["value"]} {subTotal.toFixed(2)}
+                  {currencySymbol} {subTotal.toFixed(2)}
                 </h2>
               </div>
               <div>
                 <span>GST</span>
                 <h2>
-                  {this.props.currency["value"]} {gstTotal.toFixed(2)}
+                  {currencySymbol} {gstTotal.toFixed(2)}
                 </h2>
               </div>
               {discountElement}
-              <div>
-                <span>Taxes</span>
-                <h2>
-                  {(this.props.addInfo["tax"] >= 0
-                    ? this.props.addInfo["tax"]
-                    : 0) || 0}{" "}
-                  %
-                </h2>
-              </div>
               {vatElement}
               {amountPaidElement}
               <div>
                 <span>Total ({this.props.currency["label"]})</span>
                 <h2 className="bill-total">
-                  {this.props.currency["value"]} {amount.toFixed(2)}
+                  {currencySymbol} {amountTotal.toFixed(2)}
                 </h2>
               </div>
             </div>

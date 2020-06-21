@@ -46,7 +46,6 @@ class ItemRow extends Component {
         obj,
       });
       const itemId = this.props.itemId;
-
       this.props.setItem(itemId, obj);
     }
   };
@@ -109,39 +108,29 @@ class ItemRow extends Component {
 
   render() {
     const { obj: data } = this.state;
-    let subAmount = this.getZeroDiv();
-    let gstAmount = this.getZeroDiv();
-    let totalAmount = this.getZeroDiv();
+    let subAmountDiv = this.getZeroDiv();
+    let gstAmountDiv = this.getZeroDiv();
+    let totalAmountDiv = this.getZeroDiv();
 
-    if (
-      data.quantity &&
-      data.price &&
-      data.gst &&
-      parseFloat(data.quantity) *
-        parseFloat(data.price) *
-        (1 + data.gst / 100) >
-        0
-    ) {
-      let subAmountValue = data.quantity * data.price;
-      let gstAmountValue = (data.quantity * data.price * data.gst) / 100;
-      let totalAmountValue = subAmountValue + gstAmountValue;
-
-      subAmount = (
-        <div style={this.getInputStyle()}>{subAmountValue.toFixed(2)}</div>
+    if (data.quantity && data.price && data.gst) {
+      data.subAmount = data.quantity * data.price;
+      data.gstAmount = (data.subAmount * data.gst) / 100;
+      data.totalAmount = data.subAmount + data.gstAmount;
+      subAmountDiv = (
+        <div style={this.getInputStyle()}>{data.subAmount.toFixed(2)}</div>
       );
 
-      gstAmount = (
-        <div style={this.getInputStyle()}>{gstAmountValue.toFixed(2)}</div>
+      gstAmountDiv = (
+        <div style={this.getInputStyle()}>{data.gstAmount.toFixed(2)}</div>
       );
 
-      totalAmount = (
-        <div style={this.getInputStyle()}>{totalAmountValue.toFixed(2)}</div>
+      totalAmountDiv = (
+        <div style={this.getInputStyle()}>{data.totalAmount.toFixed(2)}</div>
       );
     }
 
     return (
       <table>
-        {/* <div style={this.getItemRowStyle()} className="item-row"> */}
         <tr>
           <td>
             <input
@@ -183,12 +172,11 @@ class ItemRow extends Component {
               placeholder="Price"
             />
           </td>
-          <td>{subAmount}</td>
+          <td>{subAmountDiv}</td>
           <td>{this.getGstDropDown()}</td>
-          <td>{gstAmount}</td>
-          <td>{totalAmount}</td>
+          <td>{gstAmountDiv}</td>
+          <td>{totalAmountDiv}</td>
         </tr>
-        {/* </div> */}
       </table>
     );
   }

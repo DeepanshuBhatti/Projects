@@ -6,10 +6,13 @@ export type InvoiceState = {
 export type ItemRowState = {
   obj: {
     name: string,
-    quantity?: number,
     description: string,
-    price?: number,
+    quantity?: string,
+    price?: string,
+    subAmount?: number,
     gst?: number,
+    gstAmount?: number,
+    totalAmount?: number,
   },
 };
 

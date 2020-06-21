@@ -63,10 +63,7 @@ class Preview extends Component {
 
     let discountElement;
     let vatElement;
-    let amount = 0;
     let subTotal = 0;
-    let discount = 0;
-    let vat = 0;
     let job;
     let itemElement;
     let amountPaidElement;
@@ -84,10 +81,19 @@ class Preview extends Component {
       itemElement = Object.keys(items).map((key, index) => {
         let data = items[key];
         if (data) {
-          let itemPrice =
-            parseFloat(data["quantity"]) * parseFloat(data["price"]) > 0
-              ? (data["quantity"] * data["price"]).toFixed(2)
-              : 0;
+          let subAmount = 0;
+          let gstAmount = 0;
+          let totalAmount = 0;
+          let gstPercent = parseFloat(data["gst"] || 0);
+          let price = parseFloat(data["price"] || 0);
+          let quantity = parseFloat(data["quantity"] || 0);
+
+          if (price > 0 && quantity > 0 && gstPercent > 0) {
+            subAmount = quantity * price;
+            gstAmount = (subAmount * gstPercent) / 100;
+            totalAmount = subAmount + gstAmount;
+          }
+
           return (
             <div key={index} className="invoice__item-list__item">
               <div>
@@ -109,8 +115,20 @@ class Preview extends Component {
               <div>
                 <h4>Subamount</h4>
                 <span>
-                  {this.props.currency["value"]} {itemPrice}
+                  {this.props.currency["value"]} {subAmount}
                 </span>
+              </div>
+              <div>
+                <h4>GST</h4>
+                <span>{data["price"]}</span>
+              </div>
+              <div>
+                <h4>GST Amount</h4>
+                <span>{gstAmount}</span>
+              </div>
+              <div>
+                <h4>Total Amount</h4>
+                <span>{totalAmount}</span>
               </div>
             </div>
           );
@@ -120,20 +138,29 @@ class Preview extends Component {
       });
     }
 
-    if (addInfo["vat"] && addInfo["vat"] > 0) {
-      vatElement = (
+    let amountTotal = 0;
+    subTotal = 0;
+    let gstTotal = 0;
+
+    let currencySymbol = this.props.currency["value"];
+
+    let discountPercent = addInfo["discount"] || 0;
+    let vatPercent = addInfo["vat"] || 0;
+
+    if (discountPercent > 0) {
+      discountElement = (
         <div>
-          <span>VAT</span>
-          <h2>{this.props.addInfo["vat"]} %</h2>
+          <span>Discount</span>
+          <h2>{discountPercent} %</h2>
         </div>
       );
     }
 
-    if (addInfo["discount"] && addInfo["discount"] > 0) {
-      discountElement = (
+    if (vatPercent > 0) {
+      vatElement = (
         <div>
-          <span>Discount</span>
-          <h2>{addInfo["discount"]} %</h2>
+          <span>VAT</span>
+          <h2>{vatPercent} %</h2>
         </div>
       );
     }
@@ -143,49 +170,29 @@ class Preview extends Component {
         <div>
           <span>Paid to Date</span>
           <h2>
-            {this.props.currency["value"]} {addInfo["amountPaid"]}
+            {currencySymbol} {addInfo["amountPaid"]}
           </h2>
         </div>
       );
     }
-
     for (let key in items) {
       if (items.hasOwnProperty(key)) {
-        if (
-          items[key] &&
-          parseFloat(items[key]["quantity"]) > 0 &&
-          parseFloat(items[key]["price"]) > 0
-        ) {
-          subTotal = subTotal + items[key]["quantity"] * items[key]["price"];
-          let tax = 0;
+        let quantity = parseFloat(items[key]["quantity"] || 0);
+        let price = parseFloat(items[key]["price"]) || 0;
+        let gst = parseFloat(items[key]["gst"] || 0);
 
-          if (addInfo["discount"] && addInfo["discount"] >= 0) {
-            discount = addInfo["discount"] / 100;
-          }
-          if (addInfo["tax"] && addInfo["tax"] >= 0) {
-            tax = addInfo["tax"] / 100;
-          }
-          if (addInfo["vat"] && addInfo["vat"] >= 0) {
-            vat = addInfo["vat"] / 100;
-          }
-          if (
-            addInfo["amountPaid"] &&
-            addInfo["amountPaid"] > 0 &&
-            paidStatus
-          ) {
-            amount =
-              subTotal -
-              subTotal * discount +
-              subTotal * tax +
-              subTotal * vat -
-              parseFloat(addInfo["amountPaid"]);
-          } else {
-            amount =
-              subTotal - subTotal * discount + subTotal * tax + subTotal * vat;
-          }
+        if (quantity > 0 && price > 0 && gst > 0) {
+          subTotal = subTotal + quantity * price;
+          gstTotal = gstTotal + (quantity * price * gst) / 100;
         }
       }
     }
+
+    amountTotal =
+      subTotal +
+      gstTotal -
+      (subTotal * discountPercent) / 100 +
+      (subTotal * vatPercent) / 100;
 
     return (
       <div className="dashboard">
@@ -240,10 +247,10 @@ class Preview extends Component {
                   <div>Description</div>
                   <div>Quantity</div>
                   <div>Price</div>
-                  <div>SubAmount</div>
+                  <div>Amount</div>
                   <div>GST %</div>
-                  <div>GstAmount</div>
-                  <div>TotalAmount</div>
+                  <div>GST Amount</div>
+                  <div>Total</div>
                 </div>
                 {itemElement}
               </div>
@@ -253,25 +260,22 @@ class Preview extends Component {
                   <div>
                     <span>Subtotal</span>
                     <h2>
-                      {this.props.currency["value"]} {subTotal.toFixed(2)}
+                      {currencySymbol} {subTotal.toFixed(2)}
+                    </h2>
+                  </div>
+                  <div>
+                    <span>GST</span>
+                    <h2>
+                      {currencySymbol} {gstTotal.toFixed(2)}
                     </h2>
                   </div>
                   {discountElement}
-                  <div>
-                    <span>Taxes</span>
-                    <h2>
-                      {(this.props.addInfo["tax"] >= 0
-                        ? this.props.addInfo["tax"]
-                        : 0) || 0}{" "}
-                      %
-                    </h2>
-                  </div>
                   {vatElement}
                   {amountPaidElement}
                   <div>
                     <span>Total ({this.props.currency["label"]})</span>
                     <h2 className="bill-total">
-                      {this.props.currency["value"]} {amount.toFixed(2)}
+                      {currencySymbol} {amountTotal.toFixed(2)}
                     </h2>
                   </div>
                 </div>
