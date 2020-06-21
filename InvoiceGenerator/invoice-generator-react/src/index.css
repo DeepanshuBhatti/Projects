@@ -4,14 +4,42 @@ html {
   -ms-text-size-adjust: 100%;
 }
 
-table {
+#customers {
+  font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
   width: 100%;
   table-layout: fixed;
 }
+
+#customers table {
+  table-layout: fixed;
+  display: table;
+  width: 100%;
+}
+
+#customers td,
+#customers th {
+  width: "50%";
+  padding: 8px;
+  table-layout: fixed;
+}
+
+#customers tr {
+  width: "100%";
+}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #4caf50;
+  color: white;
+}
+
 body {
   margin: 0;
 }
+
 article,
 aside,
 details,

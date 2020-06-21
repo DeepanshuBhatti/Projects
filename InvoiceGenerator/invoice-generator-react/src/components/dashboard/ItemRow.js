@@ -9,6 +9,7 @@ import {
   ITEM_ROW_RESPONSIVE_STYLE,
   ITEM_ROW_STYLE,
 } from "./../../constants/Styles";
+import "./../../index.css";
 
 const GST_DATA = require("./../../resources/gstData.json");
 
@@ -144,7 +145,7 @@ class ItemRow extends Component {
     }
 
     return (
-      <table>
+      <table id="customers">
         <tr>
           <td>{this.getInputBox("name", data.name, "Item Name")}</td>
           <td>

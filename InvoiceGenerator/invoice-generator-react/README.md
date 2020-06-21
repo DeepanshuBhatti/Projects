@@ -66,4 +66,17 @@ npm run start
 http://localhost:3000/
 ```
 
+## ToDo
+
+- Icon of company
+- GSTIN, phone number, address on top
+- GST should be applied after discount
+  - by default same discount on all but editable
+- total discount in Rs
+- Client GST
+- Type of Payment
+- disable Due date
+- Table should be better
+- default template
+
 ---

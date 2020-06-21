@@ -2,7 +2,7 @@ export const ITEM_STYLE = {
   listWrapper: {
     display: "flex",
     flexDirection: "row",
-    marginTop: "10px",
+    marginTop: "2px",
   },
   listStyle: {
     display: "flex",
@@ -12,8 +12,8 @@ export const ITEM_STYLE = {
     alignItems: "center",
     backgroundColor: "#FBFCFC",
     borderRadius: "3px",
-    height: "auto",
-    padding: "2px 8px",
+    height: "36px",
+    padding: "2px 2px",
   },
   barStyle: {
     fontSize: "18px",
@@ -62,11 +62,10 @@ export const ITEM_ROW_STYLE = {
     margin: "4px 15px 4px 0",
   },
   gstDropDownStyle: {
-    width: "50%",
-    padding: "2px",
-    border: "0px",
-    minWidth: "60px",
-    maxWidth: "160px",
+    width: "80%",
+    height: "32px",
+    maxWidth: "100%",
+    display: "block",
   },
 };
 
@@ -91,6 +90,7 @@ export const ITEM_ROW_RESPONSIVE_STYLE = {
     flexDirection: "row",
     alignItems: "center",
     width: "50%",
+    height: "10px",
     minWidth: "60px",
     maxWidth: "160px",
     flexWrap: "Wrap",

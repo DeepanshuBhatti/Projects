@@ -48,5 +48,5 @@ export const ROW_HEADERS = [
 ];
 
 export const ROW_HEADER_DIV = Object.keys(ROW_HEADERS).map((key, index) => {
-  return <div>{ROW_HEADERS[index]}</div>;
+  return <th>{ROW_HEADERS[index]}</th>;
 });

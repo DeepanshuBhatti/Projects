@@ -72,40 +72,74 @@ class Preview extends Component {
           }
 
           return (
-            <div key={index} className="invoice__item-list__item">
-              <div>
+            // <div key={index} className="invoice__item-list__item">
+            //   <div>
+            //     <span>{data["name"]}</span>
+            //   </div>
+            //   <div>
+            //     <span>{data["description"]}</span>
+            //   </div>
+            //   <div>
+            //     <span>{data["quantity"]}</span>
+            //   </div>
+            //   <div>
+            //     <span>
+            //       {currencySymbol} {data["price"]}
+            //     </span>
+            //   </div>
+            //   <div>
+            //     <span>
+            //       {currencySymbol} {subAmount}
+            //     </span>
+            //   </div>
+            //   <div>
+            //     <span>{data["gst"]}</span>
+            //   </div>
+            //   <div>
+            //     <span>
+            //       {currencySymbol} {gstAmount}
+            //     </span>
+            //   </div>
+            //   <div>
+            //     <span>
+            //       {currencySymbol} {totalAmount}
+            //     </span>
+            //   </div>
+            // </div>
+            <tr>
+              <td>
                 <span>{data["name"]}</span>
-              </div>
-              <div>
+              </td>
+              <td>
                 <span>{data["description"]}</span>
-              </div>
-              <div>
+              </td>
+              <td>
                 <span>{data["quantity"]}</span>
-              </div>
-              <div>
+              </td>
+              <td>
                 <span>
                   {currencySymbol} {data["price"]}
                 </span>
-              </div>
-              <div>
+              </td>
+              <td>
                 <span>
                   {currencySymbol} {subAmount}
                 </span>
-              </div>
-              <div>
+              </td>
+              <td>
                 <span>{data["gst"]}</span>
-              </div>
-              <div>
+              </td>
+              <td>
                 <span>
                   {currencySymbol} {gstAmount}
                 </span>
-              </div>
-              <div>
+              </td>
+              <td>
                 <span>
                   {currencySymbol} {totalAmount}
                 </span>
-              </div>
-            </div>
+              </td>
+            </tr>
           );
         } else {
           return;
@@ -213,10 +247,14 @@ class Preview extends Component {
                 </div>
               </div>
               <hr />
-              <div className="invoice__item-list">
+              {/* <div className="invoice__item-list">
                 <div className="invoice__item-list__head">{ROW_HEADER_DIV}</div>
                 {itemElement}
-              </div>
+              </div> */}
+              <table id="customers">
+                <tr>{ROW_HEADER_DIV}</tr>
+                {itemElement}
+              </table>
               <hr />
               <div className="invoice__bill">
                 <div className="bill-detail">

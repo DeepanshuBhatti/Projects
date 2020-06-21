@@ -79,7 +79,11 @@ class Item extends Component {
 
     return (
       <div className="item">
-        <div className="item__head">{ROW_HEADER_DIV}</div>
+        <div className="item__head">
+          <table id="customers">
+            <tr>{ROW_HEADER_DIV}</tr>
+          </table>
+        </div>
         <SortableList
           order={order}
           items={items}
