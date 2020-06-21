@@ -1,5 +1,5 @@
 // @flow
-
+import React from "react";
 // Item.js
 export const SORT_ITEMS: string = "SORT_ITEMS";
 export const ADD_ITEM: string = "ADD_ITEM";
@@ -35,3 +35,18 @@ export const DATE_OPTIONS = [
   { value: "DD/MM/YYYY", label: "DD/MM/YYYY" },
   { value: "YYYY/MM/DD", label: "YYYY/MM/DD" },
 ];
+
+export const ROW_HEADERS = [
+  "Item",
+  "DESC",
+  "QTY",
+  "Price",
+  "Amount",
+  "GST %",
+  "GST",
+  "Total",
+];
+
+export const ROW_HEADER_DIV = Object.keys(ROW_HEADERS).map((key, index) => {
+  return <div>{ROW_HEADERS[index]}</div>;
+});

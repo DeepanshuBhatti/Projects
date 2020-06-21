@@ -106,8 +106,22 @@ class ItemRow extends Component {
     );
   }
 
+  getInputBox(name, value, description) {
+    return (
+      <input
+        style={this.getInputStyle()}
+        name={name}
+        type="text"
+        value={value}
+        onChange={this.handleChange}
+        placeholder={description}
+      />
+    );
+  }
+
   render() {
     const { obj: data } = this.state;
+
     let subAmountDiv = this.getZeroDiv();
     let gstAmountDiv = this.getZeroDiv();
     let totalAmountDiv = this.getZeroDiv();
@@ -132,46 +146,12 @@ class ItemRow extends Component {
     return (
       <table>
         <tr>
+          <td>{this.getInputBox("name", data.name, "Item Name")}</td>
           <td>
-            <input
-              style={this.getInputStyle()}
-              name="name"
-              type="text"
-              value={data.name}
-              onChange={this.handleChange}
-              placeholder="Item Name"
-            />
+            {this.getInputBox("description", data.description, "Description")}
           </td>
-          <td>
-            <input
-              style={this.getInputStyle()}
-              name="description"
-              type="text"
-              value={data.description}
-              onChange={this.handleChange}
-              placeholder="Description"
-            />
-          </td>
-          <td>
-            <input
-              style={this.getInputStyle()}
-              name="quantity"
-              type="text"
-              value={data.quantity}
-              onChange={this.handleChange}
-              placeholder="Quantity"
-            />
-          </td>
-          <td>
-            <input
-              style={this.getInputStyle()}
-              name="price"
-              type="text"
-              value={data.price}
-              onChange={this.handleChange}
-              placeholder="Price"
-            />
-          </td>
+          <td>{this.getInputBox("quantity", data.quantity, "Quantity")}</td>
+          <td>{this.getInputBox("price", data.price, "Price")}</td>
           <td>{subAmountDiv}</td>
           <td>{this.getGstDropDown()}</td>
           <td>{gstAmountDiv}</td>

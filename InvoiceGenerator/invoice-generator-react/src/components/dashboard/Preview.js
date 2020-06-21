@@ -1,17 +1,13 @@
 // @flow
 import React, { Component } from "react";
-import jsPDF from "jspdf";
 import { connect } from "react-redux";
 import moment from "moment";
-//import { html2canvas } from "hmtl2canvas";
+import { ROW_HEADER_DIV } from "./../../constants";
 
 class Preview extends Component {
   constructor(props) {
     super(props);
-    this.pdfToHTML = this.pdfToHTML.bind(this);
   }
-
-  pdfToHTML: () => void;
 
   componentDidMount() {
     const app = document.querySelector("#app");
@@ -31,25 +27,6 @@ class Preview extends Component {
     }
   }
 
-  pdfToHTML() {
-    let element = document.querySelector(".invoice");
-    // let options = {
-    //   onrendered: function (canvas) {
-    //     let imgstring = canvas.toDataURL("image/jpeg", 1.0);
-    //     let pdf = new jsPDF();
-    //     if (element) {
-    //       let width = element.offsetWidth * 0.264583 + 10;
-    //       let height = element.offsetHeight * 0.264583;
-    //       pdf.deletePage(1);
-    //       pdf.addPage(width, height);
-    //       pdf.addImage(imgstring, "JPEG", 5, 5);
-    //       pdf.save("download.pdf");
-    //     }
-    //   },
-    // };
-    //html2canvas(element, options);
-  }
-
   render() {
     const {
       items,
@@ -60,7 +37,7 @@ class Preview extends Component {
       dateFormat,
       paidStatus,
     } = this.props;
-
+    let currencySymbol = this.props.currency["value"];
     let discountElement;
     let vatElement;
     let subTotal = 0;
@@ -97,38 +74,36 @@ class Preview extends Component {
           return (
             <div key={index} className="invoice__item-list__item">
               <div>
-                <h4>Name</h4>
                 <span>{data["name"]}</span>
               </div>
               <div>
-                <h4>Description</h4>
                 <span>{data["description"]}</span>
               </div>
               <div>
-                <h4>Qty</h4>
                 <span>{data["quantity"]}</span>
               </div>
               <div>
-                <h4>Price</h4>
-                <span>{data["price"]}</span>
-              </div>
-              <div>
-                <h4>Subamount</h4>
                 <span>
-                  {this.props.currency["value"]} {subAmount}
+                  {currencySymbol} {data["price"]}
                 </span>
               </div>
               <div>
-                <h4>GST</h4>
-                <span>{data["price"]}</span>
+                <span>
+                  {currencySymbol} {subAmount}
+                </span>
               </div>
               <div>
-                <h4>GST Amount</h4>
-                <span>{gstAmount}</span>
+                <span>{data["gst"]}</span>
               </div>
               <div>
-                <h4>Total Amount</h4>
-                <span>{totalAmount}</span>
+                <span>
+                  {currencySymbol} {gstAmount}
+                </span>
+              </div>
+              <div>
+                <span>
+                  {currencySymbol} {totalAmount}
+                </span>
               </div>
             </div>
           );
@@ -141,8 +116,6 @@ class Preview extends Component {
     let amountTotal = 0;
     subTotal = 0;
     let gstTotal = 0;
-
-    let currencySymbol = this.props.currency["value"];
 
     let discountPercent = addInfo["discount"] || 0;
     let vatPercent = addInfo["vat"] || 0;
@@ -193,7 +166,6 @@ class Preview extends Component {
       gstTotal -
       (subTotal * discountPercent) / 100 +
       (subTotal * vatPercent) / 100;
-
     return (
       <div className="dashboard">
         <div className="preview-wrapper">
@@ -242,16 +214,7 @@ class Preview extends Component {
               </div>
               <hr />
               <div className="invoice__item-list">
-                <div className="invoice__item-list__head">
-                  <div>Item</div>
-                  <div>Description</div>
-                  <div>Quantity</div>
-                  <div>Price</div>
-                  <div>Amount</div>
-                  <div>GST %</div>
-                  <div>GST Amount</div>
-                  <div>Total</div>
-                </div>
+                <div className="invoice__item-list__head">{ROW_HEADER_DIV}</div>
                 {itemElement}
               </div>
               <hr />
@@ -281,20 +244,6 @@ class Preview extends Component {
                 </div>
               </div>
               <hr />
-            </div>
-          </div>
-
-          <div className="preview-download">
-            <div className="solid-btn solid-btn--ghost solid-btn--dashboard">
-              <a
-                className="ghost-btn ghost-btn--preview"
-                onClick={this.pdfToHTML}
-              >
-                <i className="fa fa-arrow-circle-down" aria-hidden="true">
-                  {" "}
-                </i>{" "}
-                Download
-              </a>
             </div>
           </div>
         </div>

@@ -10,6 +10,7 @@ import ItemRow from "./ItemRow";
 import { addItem, setItemsOrder, removeItem, setWidth } from "../../actions";
 import { connect } from "react-redux";
 import { ITEM_STYLE } from "./../../constants/Styles";
+import { ROW_HEADER_DIV } from "./../../constants";
 
 const DragHandle = SortableHandle(() => (
   <span>
@@ -78,16 +79,7 @@ class Item extends Component {
 
     return (
       <div className="item">
-        <div className="item__head">
-          <div>Item</div>
-          <div>Description</div>
-          <div>Quantity</div>
-          <div>Price</div>
-          <div>SubAmount</div>
-          <div>GST %</div>
-          <div>GSTAmount</div>
-          <div>TotalAmount</div>
-        </div>
+        <div className="item__head">{ROW_HEADER_DIV}</div>
         <SortableList
           order={order}
           items={items}
