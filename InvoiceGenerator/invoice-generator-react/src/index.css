@@ -8624,6 +8624,12 @@ textarea:focus {
   flex-direction: row;
   justify-content: space-between;
 }
+
+.invoice__header .Table {
+  table-layout: fixed;
+  width: "100%";
+}
+
 .invoice__header .Select {
   max-width: 120px;
   width: 100%;

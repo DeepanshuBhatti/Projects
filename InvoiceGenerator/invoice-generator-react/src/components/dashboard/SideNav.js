@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from "react";
+import React, { Component, useState, useEffect } from "react";
 import Toggle from "react-toggle";
 import Select from "react-select";
 import { connect } from "react-redux";
@@ -14,150 +14,153 @@ import {
 
 import { SideNavProps } from "./../../models/Props";
 import { DATE_OPTIONS } from "./../../constants";
+import axios from "axios";
 
-const currencyData = require("./../../resources/currencyData.json");
+function SideNav(props: SideNavProps) {
+  const [currencyData, setCurrencyData] = useState([]);
 
-class SideNav extends Component {
-  constructor(props: SideNavProps) {
-    super(props);
-  }
+  useEffect(() => {
+    const fetchData = async () => {
+      const { data } = await axios.get("/api/currencies");
+      setCurrencyData(data);
+    };
+    fetchData();
+    return () => {};
+  }, []);
 
-  handleChange = (e: Event) => {
+  const handleChange = (e: Event) => {
     if (e.target instanceof HTMLInputElement) {
       let discount =
-        e.target.name === "discount"
-          ? e.target.value
-          : this.props.addInfo.discount;
-      let vat =
-        e.target.name === "vat" ? e.target.value : this.props.addInfo.vat;
+        e.target.name === "discount" ? e.target.value : props.addInfo.discount;
+      let vat = e.target.name === "vat" ? e.target.value : props.addInfo.vat;
       let amountPaid =
         e.target.name === "amountPaid"
           ? e.target.value
-          : this.props.addInfo.amountPaid;
-      this.props.setAddInfo(discount, amountPaid, vat);
+          : props.addInfo.amountPaid;
+      props.setAddInfo(discount, amountPaid, vat);
     }
   };
 
-  currencyChange = (val: { value?: string, label?: string }) => {
+  const currencyChange = (val: { value?: string, label?: string }) => {
     if (val) {
-      this.props.setCurrency(val);
+      props.setCurrency(val);
     } else {
-      this.props.setCurrency({ value: "₹", label: "INR" });
+      props.setCurrency({ value: "₹", label: "INR" });
     }
   };
 
-  dateFormatChange = (val: { value: ?string, label: ?string }) => {
+  const dateFormatChange = (val: { value: ?string, label: ?string }) => {
     if (val) {
-      this.props.setDateFormat(val);
+      props.setDateFormat(val);
     } else {
-      this.props.setDateFormat({ value: "DD/MM/YYYY", label: "DD/MM/YYYY" });
+      props.setDateFormat({ value: "DD/MM/YYYY", label: "DD/MM/YYYY" });
     }
   };
 
-  render() {
+  const getPaidAmountInput = () => {
     let paidAmountInput;
-    let { paidStatus } = this.props;
+    let { paidStatus } = props;
     if (paidStatus) {
       paidAmountInput = (
         <div className="setting setting--paid">
           <input
             type="text"
             name="amountPaid"
-            value={this.props.addInfo.amountPaid}
-            onChange={this.handleChange}
+            value={props.addInfo.amountPaid}
+            onChange={handleChange}
           />
         </div>
       );
     }
+    return paidAmountInput;
+  };
 
-    return (
-      <div className="side-nav">
-        <h4>Invoice Settings</h4>
-        <hr />
-        <div className="side-nav__element">
+  return (
+    <div className="side-nav">
+      <h4>Invoice Settings</h4>
+      <hr />
+      <div className="side-nav__element">
+        <div className="setting">
+          <span>Discount</span>
+          <input
+            type="text"
+            name="discount"
+            value={props.addInfo.discount}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="setting">
+          <span>Value added tax (VAT)</span>
+          <input
+            type="text"
+            name="vat"
+            value={props.addInfo.vat}
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="setting setting--inline">
+          <span>Paid to date</span>
+          <label>
+            <Toggle
+              checked={props.paidStatus}
+              icons={false}
+              onChange={() => {
+                props.setPaidStatus(!props.paidStatus);
+              }}
+            />
+          </label>
+        </div>
+        {getPaidAmountInput()}
+      </div>
+      <hr className="full-line" />
+      <div className="side-nav__inline-element">
+        <div className="side-nav__element side-nav__element--select">
           <div className="setting">
-            <span>Discount</span>
-            <input
-              type="text"
-              name="discount"
-              value={this.props.addInfo.discount}
-              onChange={this.handleChange}
+            <span>Currency</span>
+            <Select
+              name="currency"
+              value={props.currency}
+              options={currencyData}
+              onChange={currencyChange}
             />
           </div>
+        </div>
+        <div className="side-nav__element side-nav__element--select">
           <div className="setting">
-            <span>Value added tax (VAT)</span>
-            <input
-              type="text"
-              name="vat"
-              value={this.props.addInfo.vat}
-              onChange={this.handleChange}
+            <span>Date Format</span>
+            <Select
+              name="dateFormat"
+              searchable={false}
+              value={props.dateFormat}
+              options={DATE_OPTIONS}
+              onChange={dateFormatChange}
             />
-          </div>
-
-          <div className="setting setting--inline">
-            <span>Paid to date</span>
-            <label>
-              <Toggle
-                checked={this.props.paidStatus}
-                icons={false}
-                onChange={() => {
-                  this.props.setPaidStatus(!this.props.paidStatus);
-                }}
-              />
-            </label>
-          </div>
-
-          {paidAmountInput}
-        </div>
-        <hr className="full-line" />
-        <div className="side-nav__inline-element">
-          <div className="side-nav__element side-nav__element--select">
-            <div className="setting">
-              <span>Currency</span>
-              <Select
-                name="currency"
-                value={this.props.currency}
-                options={currencyData}
-                onChange={this.currencyChange}
-              />
-            </div>
-          </div>
-          <div className="side-nav__element side-nav__element--select">
-            <div className="setting">
-              <span>Date Format</span>
-              <Select
-                name="dateFormat"
-                searchable={false}
-                value={this.props.dateFormat}
-                options={DATE_OPTIONS}
-                onChange={this.dateFormatChange}
-              />
-            </div>
-          </div>
-        </div>
-        <hr className="full-line visiblity-check" />
-        <div className="side-nav__element visiblity-check">
-          <div className="setting">
-            <div className="solid-btn solid-btn--ghost">
-              <Link to="preview" className="ghost-btn">
-                <i className="fa fa-eye" aria-hidden="true"></i> Preview
-              </Link>
-              <Link
-                to="preview"
-                className="ghost-btn"
-                onClick={() => {
-                  this.props.setDownloadStatus(!this.props.downloadStatus);
-                }}
-              >
-                <i className="fa fa-arrow-circle-down" aria-hidden="true"></i>{" "}
-                Download
-              </Link>
-            </div>
           </div>
         </div>
       </div>
-    );
-  }
+      <hr className="full-line visiblity-check" />
+      <div className="side-nav__element visiblity-check">
+        <div className="setting">
+          <div className="solid-btn solid-btn--ghost">
+            <Link to="preview" className="ghost-btn">
+              <i className="fa fa-eye" aria-hidden="true"></i> Preview
+            </Link>
+            <Link
+              to="preview"
+              className="ghost-btn"
+              onClick={() => {
+                props.setDownloadStatus(!props.downloadStatus);
+              }}
+            >
+              <i className="fa fa-arrow-circle-down" aria-hidden="true"></i>{" "}
+              Download
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 function mapStateToProps(state, ownProps) {
