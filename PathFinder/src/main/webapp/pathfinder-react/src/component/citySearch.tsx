@@ -1,12 +1,11 @@
 import React, { Component } from "react";
 import { CityInfo } from "../model/CityInfo";
-import jsonData from "./../data/data.json";
+import { fetchCityInfo, fetchShortestDistance } from "./../Api";
 
 export class CitySearch extends Component<CityInfo> {
   cityRef: React.RefObject<HTMLInputElement>;
   state: any = {
     cities: [],
-    distance: [],
   };
   constructor(props: CityInfo) {
     super(props);
@@ -14,9 +13,18 @@ export class CitySearch extends Component<CityInfo> {
   }
 
   onSearchClick = () => {
+    fetchCityInfo().then((res) =>
+      this.setState({
+        cities: res,
+      })
+    );
+
+    fetchShortestDistance("delhi", "indore").then((res) => console.log(res));
+  };
+
+  onClear = () => {
     this.setState({
-      cities: jsonData.tables.cities,
-      distance: jsonData.tables.distance,
+      cities: [],
     });
   };
 
@@ -52,13 +60,17 @@ export class CitySearch extends Component<CityInfo> {
   }
 
   render() {
-    const currentCity: CityInfo = this.props;
     return (
       <div>
         <button onClick={this.onSearchClick} className="button">
           <span>Display City</span>
         </button>
-        {this.getTableForAllCities()}
+        <button onClick={this.onClear} className="button">
+          <span>Clear</span>
+        </button>
+        {this.state.cities != null &&
+          this.state.cities.length > 0 &&
+          this.getTableForAllCities()}
       </div>
     );
   }

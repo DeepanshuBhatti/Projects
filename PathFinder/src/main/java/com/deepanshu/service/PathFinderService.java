@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import com.deepanshu.Dijkstra;
 import com.deepanshu.dao.PathFinderDao;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class PathFinderService {
 
     private final PathFinderDao pathFinderDao;
+
+    private static final Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
     public PathFinderService() {
         pathFinderDao = new PathFinderDao();
@@ -44,6 +48,8 @@ public class PathFinderService {
             @RequestParam(value = "sourceName") String sourceName,
             @RequestParam(value = "destinationName") String destinationName
     ) {
+
+        LOGGER.info("Got input parameters " + sourceName +" and " +  destinationName);
         Map<Integer, String> cityIdToNameMap = pathFinderDao.getCityIdToNameMap();
         int sourceId = -1;
         int destinationId = -1;
