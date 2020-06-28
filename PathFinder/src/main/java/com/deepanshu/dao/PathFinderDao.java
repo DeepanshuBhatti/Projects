@@ -35,6 +35,7 @@ public class PathFinderDao {
     }
 
     public Map<Integer, String> getCityIdToNameMap() {
+        establishSqlConnection();
         cityIdToNameMap = new HashMap<>();
         try {
             resultSet = statement.executeQuery("select * from cities");
@@ -44,10 +45,12 @@ public class PathFinderDao {
 
                 cityIdToNameMap.putIfAbsent(cityId, cityName);
             }
+            resultSet.close();
         } catch (SQLException sqlException) {
             LOGGER.log(Level.SEVERE, sqlException.getMessage());
             this.closeSqlConnection();
         }
+        this.closeSqlConnection();
         return cityIdToNameMap;
     }
 
@@ -56,7 +59,7 @@ public class PathFinderDao {
         if (cityIdToNameMap != null && cityIdToNameMap.size() < 1) {
             cityIdToNameMap = getCityIdToNameMap();
         }
-
+        this.establishSqlConnection();
         try {
             resultSet = statement.executeQuery("select * from distance");
             while (resultSet.next()) {
@@ -73,10 +76,12 @@ public class PathFinderDao {
                         )
                 );
             }
+            resultSet.close();
         } catch (SQLException sqlException) {
             LOGGER.log(Level.SEVERE, sqlException.getMessage());
             this.closeSqlConnection();
         }
+        this.closeSqlConnection();
         return sourceDestinationDistanceList;
     }
 

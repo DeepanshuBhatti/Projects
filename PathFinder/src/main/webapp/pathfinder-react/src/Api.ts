@@ -3,9 +3,10 @@ export async function fetchCityInfo() {
   try {
     const res = await fetch(url);
     const data = await res.json();
+    console.log(data);
     return data;
   } catch (error) {
-    return console.error(error);
+    console.error(error);
   }
 }
 
@@ -19,6 +20,7 @@ export async function fetchShortestDistance(
     const data = await res.json();
     return data;
   } catch (error) {
-    return console.error(error);
+    console.error(error);
+    return 0;
   }
 }

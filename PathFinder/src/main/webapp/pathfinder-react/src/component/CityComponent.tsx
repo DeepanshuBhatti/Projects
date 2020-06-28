@@ -14,7 +14,6 @@ const CityComponent: React.FC = () => {
         cities: res,
       })
     );
-    fetchShortestDistance("delhi", "indore").then((res) => console.log(res));
   };
 
   const onClear = () => {
