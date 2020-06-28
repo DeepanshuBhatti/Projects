@@ -2,7 +2,7 @@
 
 ## Output Screenshot
 
-![Alt text](\public\screen.jpg)
+![Alt text](https://github.com/DeepanshuBhatti/Projects/blob/master/PathFinder/src/main/webapp/pathfinder-react/public/screen.JPG)
 
 ## Functionality
 
