@@ -1,66 +1,62 @@
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react";
 import { fetchCityInfo, fetchShortestDistance } from "../Api";
-import CityDropDown from "./CityDropDown";
 import { CityInfo } from "../model/CityInfo";
+import Dropdown from "react-dropdown";
+import "react-dropdown/style.css";
 
 const CitySearchComponent: React.FC = () => {
-  const [state, setState] = useState({
-    cities: [],
-    source: "",
-    destination: "",
-    distance: null,
-  });
+  const [cities, setCities] = useState([]);
+  const [distance, setDistance] = useState(null);
+  const [source, setSource] = useState(null);
+  const [destination, setDestination] = useState(null);
+
+  useEffect(() => {
+    fetchCityInfo().then((res) => {
+      setCities(res);
+    });
+  }, []);
 
   const onSearchClick = () => {
-    fetchShortestDistance("delhi", "indore").then((res) => {
-      console.log(res);
-      setState({
-        cities: state.cities,
-        source: state.source,
-        destination: state.destination,
-        distance: res,
-      });
+    fetchShortestDistance(source, destination).then((res) => {
+      setDistance(res);
     });
   };
 
-  useEffect(() => {
-    fetchCityInfo().then((res) =>
-      setState({
-        cities: res,
-        source: "",
-        destination: "",
-        distance: null,
-      })
-    );
-  }, []);
-
   const onClear = () => {
-    setState({
-      cities: [],
-      source: "",
-      destination: "",
-      distance: null,
+    setDistance(null);
+    setSource(null);
+    setDestination(null);
+  };
+
+  const getCityNames = (cities: Array<CityInfo>) => {
+    return cities.map(function (item: CityInfo) {
+      return item.name;
     });
   };
 
   const getSourceCitiesDropDown = () => {
-    let sourceCities = state.cities;
-    return getCityDropDowns(sourceCities);
+    let cityNames = getCityNames(cities);
+    return (
+      <Dropdown
+        options={cityNames}
+        onChange={(e) => setSource(e.value)}
+        value={source}
+        placeholder="Select an option"
+      />
+    );
   };
 
   const getDestinationCitiesDropDown = () => {
-    let destinationCities = state.cities;
-    if (state.source !== "") {
-      destinationCities = destinationCities.filter(
-        (item) => item.name !== state.source
-      );
-    }
-    return getCityDropDowns(destinationCities);
-  };
-
-  const getCityDropDowns = (cities: Array<CityInfo>) => {
-    return <CityDropDown cities={cities} />;
+    let cityNames = getCityNames(cities);
+    return (
+      <Dropdown
+        options={cityNames}
+        onChange={(e) => setDestination(e.value)}
+        value={destination}
+        placeholder="Select an option"
+      />
+    );
   };
 
   return (
@@ -69,13 +65,11 @@ const CitySearchComponent: React.FC = () => {
         <tbody>
           <tr>
             <td>
-              {state.cities != null &&
-                state.cities.length > 0 &&
-                getSourceCitiesDropDown()}
+              {cities != null && cities.length > 0 && getSourceCitiesDropDown()}
             </td>
             <td>
-              {state.cities != null &&
-                state.cities.length > 0 &&
+              {cities != null &&
+                cities.length > 0 &&
                 getDestinationCitiesDropDown()}
             </td>
           </tr>
@@ -85,11 +79,18 @@ const CitySearchComponent: React.FC = () => {
                 <span>Search Distance</span>
               </button>
             </td>
+            <td>
+              <button onClick={onClear} className="button">
+                <span>Clear</span>
+              </button>
+            </td>
           </tr>
           <tr>
-            <td>
-              {state.distance != null && (
-                <div>Distance is {state.distance} KM</div>
+            <td colSpan={2}>
+              {distance != null && (
+                <div>
+                  Distance between {source} and {destination} is {distance} KM
+                </div>
               )}
             </td>
           </tr>

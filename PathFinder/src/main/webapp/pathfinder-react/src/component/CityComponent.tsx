@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
-import { fetchCityInfo, fetchShortestDistance } from "../Api";
+import { fetchCityInfo } from "../Api";
 import CityInfoGrid from "./CityInfoGrid";
 
 const CityComponent: React.FC = () => {
