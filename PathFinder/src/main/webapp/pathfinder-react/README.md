@@ -1,5 +1,15 @@
 # Path Finder React
 
+## Output Screenshot
+
+![Alt text](\public\screen.jpg)
+
+## Functionality
+
+- Backend Application should be up and running
+- On clicking Display City button the table will be displayed which will show data fetched from API <http://localhost:8080/PathFinderService/getAllCityInfo?format=json>
+- Search distance gives distance between two selected cities using API <http://localhost:8080/PathFinderService/getShortestDistance?sourceName=delhi&destinationName=mumbai&format=json>
+
 ## Install
 
 ```sh
