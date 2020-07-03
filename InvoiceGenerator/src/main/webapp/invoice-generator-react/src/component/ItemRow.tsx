@@ -5,13 +5,15 @@ import "react-dropdown/style.css";
 
 const ItemRow: React.FC = () => {
   const [gst, setGst] = useState(5);
-  const [itemName, setItemName] = useState(null);
-  const [itemDescription, setItemDescription] = useState(null);
-  const [quantity, setQuantity] = useState(0);
-  const [price, setPrice] = useState(0);
-  const [subAmount, setSubAmount] = useState(0);
-  const [gstAmount, setGstAmount] = useState(0);
-  const [totalAmount, setTotalAmount] = useState(0);
+  const [data, setData] = useState({
+    name: "",
+    description: "",
+    quantity: 0,
+    price: 0,
+    subAmount: 0,
+    gstAmount: 0,
+    totalAmount: 0,
+  });
 
   const getZeroDiv = () => {
     return <div>0</div>;
@@ -25,7 +27,7 @@ const ItemRow: React.FC = () => {
         <Dropdown
           options={GST_DATA}
           onChange={(e) => setGst(parseInt(e.value))}
-          value="5.0"
+          value="5"
           placeholder="Select an option"
         />
       </div>
@@ -37,11 +39,19 @@ const ItemRow: React.FC = () => {
       <input
         name="itemName"
         type="text"
-        value={itemName}
-        onChange={(e) => setItemName(e.currentTarget.value)}
+        value={data.name}
+        onChange={onNameChange}
         placeholder="Name"
       />
     );
+  };
+
+  const onNameChange = (e: any) => {
+    let name = String(e.currentTarget.value);
+    setData({
+      ...data,
+      name: name,
+    });
   };
 
   const getItemDescriptionInput = () => {
@@ -49,16 +59,33 @@ const ItemRow: React.FC = () => {
       <input
         name="itemDescription"
         type="text"
-        value={itemDescription}
-        onChange={(e) => setItemDescription(e.currentTarget.value)}
+        value={data.description}
+        onChange={onDescriptionChange}
         placeholder="Description"
       />
     );
   };
 
+  const onDescriptionChange = (e: any) => {
+    let description = String(e.currentTarget.value);
+    setData({
+      ...data,
+      description: description,
+    });
+  };
+
   const onQuantityChange = (e: any) => {
-    setQuantity(parseInt(e.currentTarget.value));
-    calculateAttributes();
+    let quantity = parseInt(e.currentTarget.value);
+    let subAmount = getSubAmount(quantity, data.price);
+    let gstAmount = getGstAmount(subAmount, gst);
+    let totalAmount = getTotalAmount(subAmount, gstAmount);
+    setData({
+      ...data,
+      quantity: quantity,
+      subAmount: subAmount,
+      gstAmount: gstAmount,
+      totalAmount: totalAmount,
+    });
   };
 
   const getQuantityInput = () => {
@@ -66,7 +93,7 @@ const ItemRow: React.FC = () => {
       <input
         name="quantity"
         type="number"
-        value={quantity}
+        value={data.quantity}
         onChange={onQuantityChange}
         placeholder="0"
       />
@@ -74,8 +101,17 @@ const ItemRow: React.FC = () => {
   };
 
   const onPriceChange = (e: any) => {
-    setPrice(parseInt(e.currentTarget.value));
-    calculateAttributes();
+    let price = parseInt(e.currentTarget.value);
+    let subAmount = getSubAmount(data.quantity, price);
+    let gstAmount = getGstAmount(subAmount, gst);
+    let totalAmount = getTotalAmount(subAmount, gstAmount);
+    setData({
+      ...data,
+      price: price,
+      subAmount: subAmount,
+      gstAmount: gstAmount,
+      totalAmount: totalAmount,
+    });
   };
 
   const getPriceInput = () => {
@@ -83,34 +119,34 @@ const ItemRow: React.FC = () => {
       <input
         name="price"
         type="number"
-        value={price}
+        value={data.price}
         onChange={onPriceChange}
         placeholder="0"
       />
     );
   };
 
-  const calculateAttributes = () => {
-    console.log(quantity);
-    console.log(price);
-    console.log(gst);
-    if (quantity && price && gst) {
-      let x = quantity * price;
-      setSubAmount(x);
-      setGstAmount((subAmount * gst) / 100);
-      setTotalAmount(subAmount + gstAmount);
-    }
+  const getSubAmount = (quantity: number, price: number) => {
+    return quantity * price;
+  };
+
+  const getGstAmount = (subAmount: number, gst: number) => {
+    return (subAmount * gst) / 100;
+  };
+
+  const getTotalAmount = (subAmount: number, gstAmount: number) => {
+    return subAmount + gstAmount;
   };
 
   let subAmountDiv = getZeroDiv();
   let gstAmountDiv = getZeroDiv();
   let totalAmountDiv = getZeroDiv();
 
-  subAmountDiv = <div>{subAmount.toFixed(2)}</div>;
+  subAmountDiv = <div>{data.subAmount.toFixed(2)}</div>;
 
-  gstAmountDiv = <div>{gstAmount.toFixed(2)}</div>;
+  gstAmountDiv = <div>{data.gstAmount.toFixed(2)}</div>;
 
-  totalAmountDiv = <div>{totalAmount.toFixed(2)}</div>;
+  totalAmountDiv = <div>{data.totalAmount.toFixed(2)}</div>;
 
   return (
     <table>

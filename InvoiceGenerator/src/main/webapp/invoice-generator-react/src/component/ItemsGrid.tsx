@@ -14,7 +14,16 @@ const ItemsGrid: React.FC = () => {
     setRows([...rows]);
   };
 
-  let ROW_HEADER_DIV = ["Name", "Description", "Quantity", "Price"];
+  let ROW_HEADER_DIV = [
+    "Name",
+    "Description",
+    "Quantity",
+    "Price",
+    "Amount",
+    "GST %",
+    "GST Amount",
+    "Total",
+  ];
 
   return (
     <div>
@@ -27,9 +36,11 @@ const ItemsGrid: React.FC = () => {
           </tr>
         </thead>
       </table>
-      {rows.map((s: any, i: number) => {
-        return <div key={i}>{s}</div>;
-      })}
+      <div className="ex3">
+        {rows.map((s: any, i: number) => {
+          return <div key={i}>{s}</div>;
+        })}
+      </div>
       <button onClick={addRow} className="button">
         <span>Add Row</span>
       </button>
