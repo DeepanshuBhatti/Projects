@@ -6,5 +6,6 @@ export interface ItemsGridProps {
 }
 
 export interface ItemRowProps {
-  data: ItemInfo;
+  store: ItemsStore;
+  id: number;
 }

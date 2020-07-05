@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { observer } from "mobx-react";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+import { ItemRowProps } from "../models/Props";
 
-const ItemRow: React.FC = () => {
+const ItemRow: React.FC<ItemRowProps> = (props: ItemRowProps) => {
   const [gst, setGst] = useState(5);
   const [data, setData] = useState({
     name: "",
@@ -14,6 +15,9 @@ const ItemRow: React.FC = () => {
     gstAmount: 0,
     totalAmount: 0,
   });
+
+  props.store.addItem({ ...data, id: props.id });
+  console.log(props);
 
   const getZeroDiv = () => {
     return <div>0</div>;

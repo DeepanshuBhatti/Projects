@@ -26,11 +26,26 @@ export class ItemsStore {
   @observable itemsInfoList: Array<ItemInfo> = [];
 
   @action addItem(newItem: ItemInfo) {
+    this.itemsInfoList = this.itemsInfoList.filter((x) => x.id !== newItem.id);
     this.itemsInfoList.push(newItem);
   }
 
   @action removeItem(itemId: number) {
     this.itemsInfoList.splice(itemId);
+  }
+
+  getSize(): number {
+    return this.itemsInfoList.length;
+  }
+
+  isItemAdded(id: number): boolean {
+    let x: Array<number> = [];
+
+    this.itemsInfoList.map((value: ItemInfo, key: number) => {
+      x.push(value.id);
+    });
+
+    return x.some((item) => id === item);
   }
 }
 

@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { observer } from "mobx-react";
 import ItemRow from "./ItemRow";
+import { ItemsGridProps } from "../models/Props";
 
-const ItemsGrid: React.FC = () => {
-  const [rows, setRows] = useState([<ItemRow />]);
+const ItemsGrid: React.FC<ItemsGridProps> = (props: ItemsGridProps) => {
+  let id = props.store.getSize() + 1;
+  const [rows, setRows] = useState([<ItemRow store={props.store} id={id} />]);
 
   const addRow = () => {
-    setRows([...rows, <ItemRow />]);
+    id = props.store.getSize() + 1;
+    setRows([...rows, <ItemRow store={props.store} id={id} />]);
   };
 
   const removeRow = () => {

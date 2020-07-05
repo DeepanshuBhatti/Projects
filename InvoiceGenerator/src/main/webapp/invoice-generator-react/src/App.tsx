@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <h1>Deepanshu is the Best</h1>
-      <ItemsGrid />
+      <ItemsGrid store={itemsStore} />
     </div>
   );
 }
