@@ -9,20 +9,6 @@ export class ItemsStore {
     this.rootStore = rootStore;
   }
 
-  getDefaultItemInfo(id: number) {
-    let x: ItemInfo = {
-      id: id,
-      name: "",
-      description: "",
-      quantity: 0,
-      price: 0,
-      subAmount: 0,
-      gstAmount: 0,
-      totalAmount: 0,
-    };
-    return x;
-  }
-
   @observable itemsInfoList: Array<ItemInfo> = [];
 
   @action addItem(newItem: ItemInfo) {
@@ -38,14 +24,31 @@ export class ItemsStore {
     return this.itemsInfoList.length;
   }
 
-  isItemAdded(id: number): boolean {
-    let x: Array<number> = [];
-
-    this.itemsInfoList.map((value: ItemInfo, key: number) => {
-      x.push(value.id);
+  getSubAmountSum() {
+    let sum = 0;
+    this.itemsInfoList.map((value, index) => {
+      sum = sum + value.subAmount;
+      return index;
     });
+    return sum;
+  }
 
-    return x.some((item) => id === item);
+  getTotalAmountSum() {
+    let sum = 0;
+    this.itemsInfoList.map((value, index) => {
+      sum = sum + value.totalAmount;
+      return index;
+    });
+    return sum;
+  }
+
+  getGstAmountSum() {
+    let sum = 0;
+    this.itemsInfoList.map((value, index) => {
+      sum = sum + value.gstAmount;
+      return index;
+    });
+    return sum;
   }
 }
 

@@ -29,6 +29,37 @@
   overflow: scroll;
 }
 
+.ex6 {
+  display: flex;
+  width: 80%;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-right: 40px;
+}
+.ex6 .ex5 {
+  display: flex;
+  flex-direction: column;
+  width: 200px;
+}
+.ex6 .ex5 > div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.ex6 .ex5 > div > span {
+  display: flex;
+  align-items: center;
+  color: #000000;
+  font-size: 15px;
+}
+.ex6 .ex5 > div > h2 {
+  margin: 0px;
+  font-size: 14px;
+  color: #666;
+}
+
 input {
   width: 100%;
 }

@@ -1,1 +1,1 @@
-start /b python D:\\Git\\repo\\Projects\\WallpaperChanger\\ChangeWallpaper.py
+start /b python F:\\Git\\repo\\Projects\\WallpaperChanger\\ChangeWallpaper.py

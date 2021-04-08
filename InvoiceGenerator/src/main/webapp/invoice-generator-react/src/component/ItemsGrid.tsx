@@ -50,6 +50,22 @@ const ItemsGrid: React.FC<ItemsGridProps> = (props: ItemsGridProps) => {
       <button onClick={removeRow} className="button">
         <span>Remove Row</span>
       </button>
+      <div className="ex6">
+        <div className="ex5">
+          <div>
+            <span>Sub Total:</span>
+            <h2> {props.store.getSubAmountSum()}</h2>
+          </div>
+          <div>
+            <span>Gst Total:</span>
+            <h2> {props.store.getGstAmountSum()}</h2>
+          </div>
+          <div>
+            <span>Total Total:</span>
+            <h2> {props.store.getTotalAmountSum()}</h2>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
